@@ -1,17 +1,3 @@
-## makeCacheMatrix creates an R object that stores a matrix and its inverse
-## in its own environment
-## CacheSolve retrieves the solved matrix from MakeCache and returns the value
-## or solves the given matrix and returns its value
-
-## makeCacheMatrix creates an object that contains 4 functions:
-## set()
-## get()
-## setmatrix()
-## getmatrix()
-## and 2 objects, x (input) and m (the solved matrix)
-## it creates a complete copy of the environment, to be used by cacheSolve
-
-#first, initialize objects
 makeCacheMatrix <- function(x = numeric()) {
         m <- NULL #clear the solved matrix
         #we can reset the vector here using makeCacheMatrix$set(vector2)
@@ -35,6 +21,25 @@ makeCacheMatrix <- function(x = numeric()) {
              getmatrix = getmatrix)
 }
 
+#when you just run makeCacheMatrix once:
+m1 <- matrix(c(1/2, -1/4, -1, 3/4), nrow = 2, ncol = 2)
+myMatrix_object <- makeCacheMatrix(m1)
+#here's what's up
+
+myMatrix_object$set() #does nothing, error "y" missing
+myMatrix_object$set(matrix(1:4,2,2)) #allows you to change the matrix
+#without calling makeCacheMatrix again.
+
+myMatrix_object$get() 
+#gets either the original input for makeCacheMatrix,
+#or the new input from myMatrix_object$set
+
+myMatrix_object$setmatrix() #argument solve missing
+myMatrix_object$getmatrix() #NULL, since the matrix hasn't been solved yet
+
+#once you run this...
+m2 <- cacheSolve(myMatrix_object)
+cacheSolve(myMatrix_object)
 
 #cacheSolve uses makeCacheMatrix to either return a new solved matrix
 #or a cached one
@@ -63,3 +68,4 @@ cacheSolve <- function(makeCacheMatrix_object, ...) {
 # m1 <- matrix(c(1/2, -1/4, -1, 3/4), nrow = 2, ncol = 2)
 # myMatrix_object <- makeCacheMatrix(m1)
 # cacheSolve(myMatrix_object)
+
