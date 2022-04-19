@@ -39,7 +39,11 @@ myMatrix_object$getmatrix() #NULL, since the matrix hasn't been solved yet
 
 #once you run this...
 m2 <- cacheSolve(myMatrix_object)
-cacheSolve(myMatrix_object)
+myMatrix_object$set() #you can use this to set a new matrix to solve and cache
+myMatrix_object$get() #get new input matrix
+
+myMatrix_object$setmatrix(matrix(1:4,2,2))
+myMatrix_object$getmatrix() #returned matrix set by setmatrix
 
 #cacheSolve uses makeCacheMatrix to either return a new solved matrix
 #or a cached one
